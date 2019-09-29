@@ -1,0 +1,169 @@
+{
+  "version": 1,
+  "projects": {
+    "ngrxme": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/ngrxme",
+      "sourceRoot": "apps/ngrxme/src",
+      "prefix": "ngrxme",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/ngrxme",
+            "index": "apps/ngrxme/src/index.html",
+            "main": "apps/ngrxme/src/main.ts",
+            "polyfills": "apps/ngrxme/src/polyfills.ts",
+            "tsConfig": "apps/ngrxme/tsconfig.app.json",
+            "aot": false,
+            "assets": ["apps/ngrxme/src/favicon.ico", "apps/ngrxme/src/assets"],
+            "styles": ["apps/ngrxme/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/ngrxme/src/environments/environment.ts",
+                  "with": "apps/ngrxme/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ngrxme:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ngrxme:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ngrxme:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/ngrxme/tsconfig.app.json",
+              "apps/ngrxme/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/ngrxme/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/ngrxme/jest.config.js",
+            "tsConfig": "apps/ngrxme/tsconfig.spec.json",
+            "setupFile": "apps/ngrxme/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "ngrxme-e2e": {
+      "root": "apps/ngrxme-e2e",
+      "sourceRoot": "apps/ngrxme-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/ngrxme-e2e/cypress.json",
+            "tsConfig": "apps/ngrxme-e2e/tsconfig.e2e.json",
+            "devServerTarget": "ngrxme:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ngrxme:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/ngrxme-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/ngrxme-e2e/**"]
+          }
+        }
+      }
+    },
+    "todos": {
+      "projectType": "library",
+      "root": "libs/todos",
+      "sourceRoot": "libs/todos/src",
+      "prefix": "ngrxme",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/todos/tsconfig.lib.json",
+              "libs/todos/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/todos/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/todos/jest.config.js",
+            "tsConfig": "libs/todos/tsconfig.spec.json",
+            "setupFile": "libs/todos/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "ngrxme"
+}

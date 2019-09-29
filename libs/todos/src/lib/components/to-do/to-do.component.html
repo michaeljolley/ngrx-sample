@@ -1,0 +1,7 @@
+<p>to-do works!</p>
+
+<ul *ngIf="todos">
+  <li *ngFor="let todo of todos">
+    <input type="checkbox" (change)="completeToDo(todo)" [checked]="todo.completed"/> {{todo.title}} <input type="button" (click)="deleteToDo(todo.id)" value="Delete"/>
+  </li>
+</ul>
